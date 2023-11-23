@@ -64,7 +64,7 @@ namespace TootTallyTwitchIntegration
         {
             string configPath = Path.Combine(Paths.BepInExRootPath, "config/");
             string toottallyTwitchLink = "https://toottally.com/twitch/";
-            ConfigFile config = new ConfigFile(configPath + CONFIG_NAME, true);
+            ConfigFile config = new ConfigFile(configPath + CONFIG_NAME, true) { SaveOnConfigSet = true };
             EnableRequestsCommand = config.Bind(CONFIG_FIELD, "Enable requests command", true, "Allow people to requests songs using !ttr [songID]");
             EnableCurrentSongCommand = config.Bind(CONFIG_FIELD, "Enable current song command", true, "!song command that sends a link to the current song into the chat");
             EnableProfileCommand = config.Bind(CONFIG_FIELD, "Enable profile command", true, "!profile command that links your toottally profile into the chat");
