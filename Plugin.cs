@@ -10,6 +10,7 @@ using System.IO;
 using TootTallyAccounts;
 using TootTallyCore.APIServices;
 using TootTallyCore.Graphics;
+using TootTallyCore.Utils.Assets;
 using TootTallyCore.Utils.Helpers;
 using TootTallyCore.Utils.TootTallyModules;
 using TootTallyCore.Utils.TootTallyNotifs;
@@ -52,6 +53,11 @@ namespace TootTallyTwitchIntegration
             GameInitializationEvent.Register(Info, TryInitialize);
         }
 
+        private void Update()
+        {
+            RequestPanelManager.Update();
+        }
+
         private void TryInitialize()
         {
             // Bind to the TTModules Config for TootTally
@@ -62,6 +68,7 @@ namespace TootTallyTwitchIntegration
 
         public void LoadModule()
         {
+            AssetManager.LoadAssets(Path.Combine(Path.GetDirectoryName(Instance.Info.Location), "Assets"));
             string configPath = Path.Combine(Paths.BepInExRootPath, "config/");
             string toottallyTwitchLink = "https://toottally.com/twitch/";
             ConfigFile config = new ConfigFile(configPath + CONFIG_NAME, true) { SaveOnConfigSet = true };
@@ -79,7 +86,6 @@ namespace TootTallyTwitchIntegration
                 settingPage.AddToggle("Enable Requests Command", EnableRequestsCommand);
                 settingPage.AddToggle("Enable Current Songs Command", EnableCurrentSongCommand);
                 settingPage.AddToggle("Enable Profile Command", EnableProfileCommand);
-                //_settingPage.AddToggle("Subs-only Mode", SubOnlyMode);
                 settingPage.AddSlider("Max Request Count", 0, 200, MaxRequestCount, true);
                 settingPage.AddLabel("TwitchSpecificSettingsLabel", "Twitch Integration", 24); // 20 is the default size for text
                 settingPage.AddLabel("TwitchSpecificUsernameLabel", "Username", 16, TMPro.FontStyles.Normal, TMPro.TextAlignmentOptions.BottomLeft);
@@ -87,14 +93,6 @@ namespace TootTallyTwitchIntegration
                 settingPage.AddLabel("TwitchSpecificAccessTokenLabel", "AccessToken", 16, TMPro.FontStyles.Normal, TMPro.TextAlignmentOptions.BottomLeft);
                 settingPage.AddTextField("Twitch Access Token", new Vector2(350, 50), 20, TwitchAccessToken.Value, TwitchAccessToken.Description.Description, true, SetTwitchAccessToken);
                 settingPage.AddButton("AuthorizeTwitchButton", new Vector2(450, 50), "Authorize TootTally on Twitch", "Opens a page to get your auth token", delegate () { Application.OpenURL(toottallyTwitchLink); });
-                settingPage.AddButton("GetAccessToken", new Vector2(450, 50), "Refresh Access Token", "Refresh the access token if it expired", delegate ()
-                {
-                    Instance.StartCoroutine(TootTallyAPIService.GetValidTwitchAccessToken(TootTallyAccounts.Plugin.GetAPIKey, token_info =>
-                    {
-                        TwitchAccessToken.Value = token_info.access_token;
-                        TootTallyNotifManager.DisplayNotif("Access token successfully refreshed", Color.white);
-                    }));
-                });
                 settingPage.AddLabel("TwitchBotButtons", "Twitch Bot Settings", 24);
                 settingPage.AddButton("ConnectDisconnectBot", new Vector2(350, 50), "Connect/Disconnect Bot", "Rarely useful if the bot fails to connect after setting the auth token", () =>
                 {
@@ -139,15 +137,7 @@ namespace TootTallyTwitchIntegration
 
         public void StartBotCoroutine()
         {
-            if (Bot == null)
-            {
-                Instance.StartCoroutine(TootTallyAPIService.GetValidTwitchAccessToken(TootTallyAccounts.Plugin.GetAPIKey,token_info =>
-                {
-                    Instance.TwitchAccessToken.Value = token_info.access_token;
-                    Bot = new TwitchBot();
-                    TootTallyNotifManager.DisplayNotif("Access token successfully refreshed", Color.white);
-                }));
-            }
+            Bot ??= new TwitchBot();
         }
 
         private void SetTwitchAccessToken(string text)

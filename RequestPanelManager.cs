@@ -64,6 +64,7 @@ namespace TootTallyTwitchIntegration
 
             _overlayPanel.transform.Find("FSLatencyPanel/LatencyFG").localScale = Vector2.zero;
             _overlayPanel.transform.Find("FSLatencyPanel/LatencyBG").localScale = Vector2.zero;
+            _overlayPanel.transform.Find("FSLatencyPanel/LatencyFG").GetComponent<Image>().color = new Color(.1f, .1f, .1f);
             _containerRect = _overlayPanelContainer.GetComponent<RectTransform>();
             _containerRect.anchoredPosition = new Vector2(0,-40);
             _containerRect.sizeDelta = new Vector2(1700, 900);

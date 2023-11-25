@@ -13,7 +13,6 @@ namespace TootTallyTwitchIntegration
     public class TwitchBot
     {
         internal TwitchClient client;
-        public string ACCESS_TOKEN { private get; set; }
         public string CHANNEL { get; set; }
         public Stack<string> MessageStack { get; set; }
 
@@ -21,7 +20,7 @@ namespace TootTallyTwitchIntegration
         {
             if (!Initialize()) return;
             Plugin.LogInfo($"Attempting connection with channel {CHANNEL}...");
-            ConnectionCredentials credentials = new ConnectionCredentials(CHANNEL, ACCESS_TOKEN);
+            ConnectionCredentials credentials = new ConnectionCredentials(CHANNEL, Plugin.Instance.TwitchAccessToken.Value);
             var clientOptions = new ClientOptions
             {
                 MessagesAllowedInPeriod = 750,
@@ -58,8 +57,6 @@ namespace TootTallyTwitchIntegration
                 Plugin.DisplayNotif("Twitch Access Token is empty. Please fill it in.", true);
                 return false;
             }
-            // TODO: Check if ACCESS_TOKEN actually works
-            ACCESS_TOKEN = Plugin.Instance.TwitchAccessToken.Value;
             if (Plugin.Instance.TwitchUsername.Value == null || Plugin.Instance.TwitchUsername.Value == "")
             {
                 Plugin.DisplayNotif("Twitch Username is empty. Please fill it in.", true);
@@ -91,8 +88,7 @@ namespace TootTallyTwitchIntegration
                     {
                         if (args.Command.ArgumentsAsList.Count == 1)
                         {
-                            int song_id;
-                            if (int.TryParse(cmd_args, out song_id))
+                            if (int.TryParse(cmd_args, out int song_id))
                             {
                                 Plugin.LogInfo($"Successfully parsed request for {song_id}, submitting to stack.");
                                 Plugin.Instance.requestController.RequestSong(song_id, args.Command.ChatMessage.Username, args.Command.ChatMessage.IsSubscriber);
