@@ -9,6 +9,7 @@ using TootTallyCore.APIServices;
 using TootTallyCore.Utils.Assets;
 using TootTallyCore.Utils.Helpers;
 using TootTallyCore.Utils.TootTallyNotifs;
+using UnityEngine.UI;
 
 namespace TootTallyTwitchIntegration
 {
@@ -30,6 +31,7 @@ namespace TootTallyTwitchIntegration
             _requestRow = GameObject.Instantiate(RequestPanelManager.requestRowPrefab, canvasTransform);
             _requestRow.name = $"Request{_chart.name}";
             _requestRowContainer = _requestRow.transform.Find("LatencyFG/MainPage").gameObject;
+            _requestRow.transform.Find("LatencyFG").GetComponent<Image>().color = new Color(.05f, .05f, .05f);
             var t1 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "SongName", _chart.name, Color.white);
             var t2 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Charter", (_chart.charter ?? "Unknown"), Color.white);
             var t3 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "RequestedByName", request.requester, Color.white);
@@ -74,6 +76,9 @@ namespace TootTallyTwitchIntegration
                 if (data != null)
                 {
                     string downloadDir = Path.Combine(Path.GetDirectoryName(Plugin.Instance.Info.Location), "Downloads/");
+
+                    if (!Directory.Exists(downloadDir)) Directory.CreateDirectory(downloadDir);
+
                     string fileName = $"{_chart.id}.zip";
                     FileHelper.WriteBytesToFile(downloadDir, fileName, data);
 
