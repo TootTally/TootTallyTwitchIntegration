@@ -46,7 +46,7 @@ namespace TootTallyTwitchIntegration
         public void Disconnect()
         {
             if (client != null && client.IsConnected) client.Disconnect();
-            MessageStack.Clear();
+            MessageStack?.Clear();
             MessageStack = null;
         }
 
