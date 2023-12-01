@@ -110,6 +110,8 @@ namespace TootTallyTwitchIntegration
             }
             requestController = gameObject.AddComponent<RequestController>();
 
+            TootTallySettings.Plugin.TryAddThunderstoreIconToPageButton(Instance.Info.Location, Name, settingPage);
+
             _harmony.PatchAll(typeof(TwitchPatches));
             LogInfo($"Module loaded!");
         }
