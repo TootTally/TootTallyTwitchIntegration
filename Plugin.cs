@@ -186,9 +186,9 @@ namespace TootTallyTwitchIntegration
             {
                 RequestPanelManager.songSelectInstance = null;
                 RequestPanelManager.isPlaying = true;
-                var track = TrackLookup.lookup(RequestPanelManager.songTrackref);
+                var track = TrackLookup.lookup(GlobalVariables.chosen_track_data.trackref);
                 var songHash = SongDataHelper.GetSongHash(track);
-                Instance.StartCoroutine(TootTallyAPIService.GetHashInDB(songHash, track is CustomTrack, (id) => RequestPanelManager.currentSongID = id));
+                Instance.StartCoroutine(TootTallyAPIService.GetHashInDB(songHash, track is CustomTrack, id => RequestPanelManager.currentSongID = id));
             }
 
             [HarmonyPatch(typeof(PointSceneController), nameof(PointSceneController.Start))]
@@ -201,21 +201,19 @@ namespace TootTallyTwitchIntegration
 
             [HarmonyPatch(typeof(LevelSelectController), nameof(LevelSelectController.Start))]
             [HarmonyPostfix]
-            public static void StartBot(LevelSelectController __instance, List<SingleTrackData> ___alltrackslist, int ___songindex)
+            public static void StartBot(LevelSelectController __instance, int ___songindex)
             {
                 RequestPanelManager.songSelectInstance = __instance;
                 RequestPanelManager.songIndex = ___songindex;
-                RequestPanelManager.songTrackref = ___alltrackslist[___songindex].trackref;
                 RequestPanelManager.isPlaying = false;
             }
 
             [HarmonyPatch(typeof(LevelSelectController), nameof(LevelSelectController.advanceSongs))]
             [HarmonyPostfix]
-            public static void UpdateInstance(LevelSelectController __instance, List<SingleTrackData> ___alltrackslist, int ___songindex)
+            public static void UpdateInstance(LevelSelectController __instance, int ___songindex)
             {
                 RequestPanelManager.songSelectInstance = __instance;
                 RequestPanelManager.songIndex = ___songindex;
-                RequestPanelManager.songTrackref = ___alltrackslist[___songindex].trackref;
             }
 
             [HarmonyPatch(typeof(LevelSelectController), nameof(LevelSelectController.clickBack))]

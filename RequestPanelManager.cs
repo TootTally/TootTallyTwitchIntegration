@@ -15,7 +15,6 @@ namespace TootTallyTwitchIntegration
         public static GameObject requestRowPrefab;
         public static LevelSelectController songSelectInstance;
         public static int songIndex;
-        public static string songTrackref;
         public static bool isPlaying;
         private static List<RequestPanelRow> _requestRowList;
         private static List<Request> _requestList;
