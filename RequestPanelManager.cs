@@ -42,6 +42,8 @@ namespace TootTallyTwitchIntegration
             _overlayCanvas = new GameObject("TwitchOverlayCanvas");
             Canvas canvas = _overlayCanvas.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 1;
             CanvasScaler scaler = _overlayCanvas.AddComponent<CanvasScaler>();
             scaler.referenceResolution = new Vector2(1920, 1080);
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
