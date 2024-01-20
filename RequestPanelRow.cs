@@ -32,10 +32,10 @@ namespace TootTallyTwitchIntegration
             _requestRow.name = $"Request{_chart.name}";
             _requestRowContainer = _requestRow.transform.Find("LatencyFG/MainPage").gameObject;
             _requestRow.transform.Find("LatencyFG").GetComponent<Image>().color = new Color(.05f, .05f, .05f);
-            var t1 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "SongName", _chart.name, Color.white);
-            var t2 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Charter", (_chart.charter ?? "Unknown"), Color.white);
-            var t3 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "RequestedByName", request.requester, Color.white);
-            var t4 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Time", request.date, Color.white);
+            var t1 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "SongName", _chart.name);
+            var t2 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Charter", _chart.charter ?? "Unknown");
+            var t3 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "RequestedByName", request.requester);
+            var t4 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Time", request.date);
             //fuck that shit :skull:
             t1.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 64);
             t2.GetComponent<RectTransform>().sizeDelta = t3.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 64);

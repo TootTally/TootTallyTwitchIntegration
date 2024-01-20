@@ -132,10 +132,8 @@ namespace TootTallyTwitchIntegration
         private void SetTwitchUsername(string text)
         {
             Instance.TwitchUsername.Value = text;
-            TootTallyNotifManager.DisplayNotif($"Twitch username is set to '{text}'", Color.white);
+            TootTallyNotifManager.DisplayNotif($"Twitch username is set to '{text}'");
         }
-
-        public static void DisplayNotif(string text, bool isError = false) => Instance.requestController?.DisplayNotif(text, isError);
 
         public void StartBotCoroutine()
         {
@@ -262,7 +260,6 @@ namespace TootTallyTwitchIntegration
         public class Notif
         {
             public string message;
-            public Color color;
         }
     }
 }

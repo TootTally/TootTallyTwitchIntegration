@@ -7,6 +7,7 @@ using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
 using TwitchLib.Communication.Events;
 using TootTallyAccounts;
+using TootTallyCore.Utils.TootTallyNotifs;
 
 namespace TootTallyTwitchIntegration
 {
@@ -54,12 +55,12 @@ namespace TootTallyTwitchIntegration
         {
             if (Plugin.Instance.TwitchAccessToken.Value == null || Plugin.Instance.TwitchAccessToken.Value == "")
             {
-                Plugin.DisplayNotif("Twitch Access Token is empty. Please fill it in.", true);
+                TootTallyNotifManager.DisplayError("Twitch Access Token is empty. Please fill it in.");
                 return false;
             }
             if (Plugin.Instance.TwitchUsername.Value == null || Plugin.Instance.TwitchUsername.Value == "")
             {
-                Plugin.DisplayNotif("Twitch Username is empty. Please fill it in.", true);
+                TootTallyNotifManager.DisplayError("Twitch Username is empty. Please fill it in.");
                 return false;
             }
             CHANNEL = Plugin.Instance.TwitchUsername.Value.ToLower();
@@ -73,7 +74,7 @@ namespace TootTallyTwitchIntegration
 
         private void Client_OnIncorrectLogin(object sender, OnIncorrectLoginArgs args)
         {
-            Plugin.DisplayNotif("Login credentials incorrect. Please re-authorize or refresh your access token, and re-check your Twitch username.", true);
+            TootTallyNotifManager.DisplayError("Login credentials incorrect. Please re-authorize or refresh your access token, and re-check your Twitch username.");
             client.Disconnect();
         }
 
@@ -149,7 +150,7 @@ namespace TootTallyTwitchIntegration
         private void Client_OnJoinedChannel(object sender, OnJoinedChannelArgs e)
         {
             client.SendMessage(e.Channel, "! TootTally Twitch Integration ready!");
-            Plugin.DisplayNotif("Twitch Integration successful!");
+            TootTallyNotifManager.DisplayNotif("Twitch Integration successful!");
             Plugin.LogInfo("Twitch integration successfully attached to chat!");
             CHANNEL = e.Channel;
         }
@@ -157,7 +158,7 @@ namespace TootTallyTwitchIntegration
         private void Client_OnDisconnected(object sender, OnDisconnectedArgs e)
         {
             Plugin.LogInfo("TwitchBot successfully disconnected from Twitch!");
-            Plugin.DisplayNotif("Twitch bot disconnected!");
+            TootTallyNotifManager.DisplayNotif("Twitch bot disconnected!");
         }
     }
 }

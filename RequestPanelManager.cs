@@ -79,7 +79,7 @@ namespace TootTallyTwitchIntegration
             _overlayPanelContainer.transform.parent.gameObject.AddComponent<Mask>();
             GameObjectFactory.DestroyFromParent(_overlayPanelContainer.transform.parent.gameObject, "subtitle");
             GameObjectFactory.DestroyFromParent(_overlayPanelContainer.transform.parent.gameObject, "title");
-            var text = GameObjectFactory.CreateSingleText(_overlayPanelContainer.transform, "title", "Twitch Requests", Color.white);
+            var text = GameObjectFactory.CreateSingleText(_overlayPanelContainer.transform, "title", "Twitch Requests");
             text.fontSize = 60f;
             _overlayPanel.SetActive(false);
             SetRequestRowPrefab();
@@ -177,7 +177,7 @@ namespace TootTallyTwitchIntegration
 
             request.RemoveFromPanel();
             RequestPanelManager.AddSongIDToHistory(request.request.song_id);
-            TootTallyNotifManager.DisplayNotif($"Fulfilled request from {request.request.requester}", Color.white);
+            TootTallyNotifManager.DisplayNotif($"Fulfilled request from {request.request.requester}");
         }
 
         public static void SetRequestRowPrefab()

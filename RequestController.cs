@@ -32,7 +32,7 @@ namespace TootTallyTwitchIntegration
                 Instance.StartCoroutine(TootTallyAPIService.GetSongDataFromDB(request.song_id, (songdata) =>
                 {
                     LogInfo($"Obtained request by {request.requester} for song {songdata.author} - {songdata.name}");
-                    DisplayNotif($"Requested song by {request.requester}: {songdata.author} - {songdata.name}");
+                    TootTallyNotifManager.DisplayNotif($"Requested song by {request.requester}: {songdata.author} - {songdata.name}");
                     var processed_request = new Request
                     {
                         requester = request.requester,
@@ -47,19 +47,8 @@ namespace TootTallyTwitchIntegration
             if (NotifQueue.TryDequeue(out Notif notif))
             {
                 LogInfo("Attempting to generate notification...");
-                TootTallyNotifManager.DisplayNotif(notif.message, notif.color);
+                TootTallyNotifManager.DisplayNotif(notif.message);
             }
-        }
-
-        public void DisplayNotif(string message, bool isError = false)
-        {
-            Color color = isError ? Color.red : Color.white;
-            Notif notif = new Notif
-            {
-                message = message,
-                color = color
-            };
-            NotifQueue.Enqueue(notif);
         }
 
         public void RequestSong(int song_id, string requester, bool isSubscriber = false)
