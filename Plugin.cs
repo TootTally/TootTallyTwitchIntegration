@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using TootTallyAccounts;
+using TootTallyCore;
 using TootTallyCore.APIServices;
 using TootTallyCore.Graphics;
 using TootTallyCore.Utils.Assets;
@@ -111,6 +112,7 @@ namespace TootTallyTwitchIntegration
             requestController = gameObject.AddComponent<RequestController>();
 
             TootTallySettings.Plugin.TryAddThunderstoreIconToPageButton(Instance.Info.Location, Name, settingPage);
+            ThemeManager.OnThemeRefreshEvents += RequestPanelManager.UpdateTheme;
 
             _harmony.PatchAll(typeof(TwitchPatches));
             LogInfo($"Module loaded!");
@@ -118,6 +120,7 @@ namespace TootTallyTwitchIntegration
 
         public void UnloadModule()
         {
+            ThemeManager.OnThemeRefreshEvents -= RequestPanelManager.UpdateTheme;
             RequestPanelManager.Dispose();
             Bot?.Disconnect();
             Bot = null;

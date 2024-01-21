@@ -158,7 +158,6 @@ namespace TootTallyTwitchIntegration
             if (!_isInitialized) return; //just in case too
 
             GameObject.DestroyImmediate(_overlayCanvas);
-            GameObject.DestroyImmediate(_overlayPanel);
             _isInitialized = false;
         }
 
@@ -240,6 +239,13 @@ namespace TootTallyTwitchIntegration
         public static bool IsBlocked(int song_id) => _blockedList.Any(x => x.song_id == song_id);
 
         public static bool ShouldScrollSongs() => !_isPanelActive && !_isAnimating;
+
+        public static void UpdateTheme()
+        {
+            if (!_isInitialized) return;
+            Dispose();
+            Initialize();
+        }
 
         public static void UpdateSaveRequestFile()
         {
