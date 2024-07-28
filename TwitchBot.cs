@@ -102,7 +102,7 @@ namespace TootTallyTwitchIntegration
                         }
                         else
                         {
-                            client.SendMessage(CHANNEL, $"!Use !ttr to request a chart use its TootTally Song ID! To get a song ID, search for the song in https://toottally.com (Example: !ttr 3781)");
+                            client.SendMessage(CHANNEL, $"!Use !ttr to request a chart use its TootTally Song ID! To get a song ID, search for the song in https://toottally.com/search/ (Example: !ttr 3781)");
                         }
                     }
                     break;
