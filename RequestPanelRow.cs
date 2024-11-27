@@ -99,7 +99,7 @@ namespace TootTallyTwitchIntegration
                     TootTallyNotifManager.DisplayNotif("Reloading Songs...");
                     TootTallyCore.Plugin.Instance.Invoke("ReloadTracks", .5f);
                     var play = GameObjectFactory.CreateCustomButton(_requestRowContainer.transform, Vector2.zero, new Vector2(68, 68), AssetManager.GetSprite("Check64.png"), "PlayButton", PlayChart);
-                    play.transform.SetSiblingIndex(4);
+                    play.transform.SetSiblingIndex(5);
                 }
                 else
                 {
