@@ -10,6 +10,7 @@ using TootTallyCore.Utils.Assets;
 using TootTallyCore.Utils.Helpers;
 using TootTallyCore.Utils.TootTallyNotifs;
 using UnityEngine.UI;
+using System;
 
 namespace TootTallyTwitchIntegration
 {
@@ -32,15 +33,19 @@ namespace TootTallyTwitchIntegration
             _requestRow.name = $"Request{_chart.name}";
             _requestRowContainer = _requestRow.transform.Find("LatencyFG/MainPage").gameObject;
             _requestRow.transform.Find("LatencyFG").GetComponent<Image>().color = new Color(.05f, .05f, .05f);
-            var t1 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "SongName", _chart.name);
-            var t2 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Charter", _chart.charter ?? "Unknown");
-            var t3 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "RequestedByName", request.requester);
-            var t4 = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Time", request.date);
+            var songNameText = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "SongName", _chart.name);
+            var charterText = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Charter", _chart.charter ?? "Unknown");
+            var requesterText = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "RequestedByName", request.requester);
+            var time = TimeSpan.FromSeconds(request.songData.song_length);
+            var stringTime = $"{(time.Hours != 0 ? (time.Hours + ":") : "")}{(time.Minutes != 0 ? time.Minutes : "0")}:{(time.Seconds != 0 ? time.Seconds : "00"):00}";
+            var songLengthText = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "SongLength", stringTime);
+            var requestTime = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Time", request.date);
             //fuck that shit :skull:
-            t1.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 64);
-            t2.GetComponent<RectTransform>().sizeDelta = t3.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 64);
-            t4.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 64);
-            t1.overflowMode = t2.overflowMode = t3.overflowMode = t4.overflowMode = TMPro.TextOverflowModes.Ellipsis;
+            songNameText.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 64);
+            songLengthText.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 64);
+            charterText.GetComponent<RectTransform>().sizeDelta = requesterText.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 64);
+            requestTime.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 64);
+            songNameText.overflowMode = charterText.overflowMode = requesterText.overflowMode = requestTime.overflowMode = TMPro.TextOverflowModes.Ellipsis;
 
             if (FSharpOption<TromboneTrack>.get_IsNone(TrackLookup.tryLookup(_chart.track_ref)))
             {
