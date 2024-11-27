@@ -97,7 +97,7 @@ namespace TootTallyTwitchIntegration
         {
             if (!_isInitialized) return; //just in case
 
-            if (Input.GetKeyDown(KeyCode.F8))
+            if (Input.GetKeyDown(Plugin.Instance.ToggleRequestPanel.Value))
                 TogglePanel();
 
             if (Input.GetKeyDown(KeyCode.Escape) && _isPanelActive)

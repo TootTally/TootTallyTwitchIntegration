@@ -73,6 +73,7 @@ namespace TootTallyTwitchIntegration
             string configPath = Path.Combine(Paths.BepInExRootPath, "config/");
             string toottallyTwitchLink = "https://toottally.com/twitch/";
             ConfigFile config = new ConfigFile(configPath + CONFIG_NAME, true) { SaveOnConfigSet = true };
+            ToggleRequestPanel = config.Bind(CONFIG_FIELD, "TogglePanel", KeyCode.F8, "Key to toggle the twitch request panel.");
             EnableRequestsCommand = config.Bind(CONFIG_FIELD, "Enable requests command", true, "Allow people to requests songs using !ttr [songID]");
             EnableCurrentSongCommand = config.Bind(CONFIG_FIELD, "Enable current song command", true, "!song command that sends a link to the current song into the chat");
             EnableProfileCommand = config.Bind(CONFIG_FIELD, "Enable profile command", true, "!profile command that links your toottally profile into the chat");
@@ -84,6 +85,8 @@ namespace TootTallyTwitchIntegration
             settingPage = TootTallySettingsManager.AddNewPage(CONFIG_FIELD, "Twitch Integration Settings", 40, new Color(.1f, .1f, .1f, .1f));
             if (settingPage != null)
             {
+                settingPage.AddLabel("ToggleKeybindLabel", "Keybind Toggle Request Panel", 20);
+                settingPage.AddDropdown("Toggle Request Panel", ToggleRequestPanel);
                 settingPage.AddToggle("Enable Requests Command", EnableRequestsCommand);
                 settingPage.AddToggle("Enable Current Songs Command", EnableCurrentSongCommand);
                 settingPage.AddToggle("Enable Profile Command", EnableProfileCommand);
@@ -231,6 +234,7 @@ namespace TootTallyTwitchIntegration
             private static bool ShouldScrollSongs() => RequestPanelManager.ShouldScrollSongs();
         }
 
+        public ConfigEntry<KeyCode> ToggleRequestPanel { get; set; }
         public ConfigEntry<bool> EnableRequestsCommand { get; set; }
         public ConfigEntry<bool> EnableProfileCommand { get; set; }
         public ConfigEntry<bool> EnableCurrentSongCommand { get; set; }
