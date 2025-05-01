@@ -4,7 +4,7 @@
 		<TargetFramework>net472</TargetFramework>
 		<AssemblyName>TootTallyTwitchIntegration</AssemblyName>
 		<Description>Twitch integration with song requests and more</Description>
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
 		<TromboneChampDir>E:\SteamLibrary\steamapps\common\TromboneChamp</TromboneChampDir>
@@ -16,26 +16,17 @@
 		<PackageReference Include="BepInEx.Core" Version="5.*" />
 		<PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
 		<PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile" />
-		<PackageReference Include="TromboneChamp.GameLibs" Version="1.17.0-beta" />
-		<PackageReference Include="TromboneChamp.BaboonAPI" Version="2.5.0" />
-		<PackageReference Include="TromboneChamp.TrombLoader" Version="2.0.0-rc.1" />
+		<PackageReference Include="TromboneChamp.GameLibs" Version="1.25.0" />
+		<PackageReference Include="TromboneChamp.BaboonAPI" Version="2.9.0" />
+		<PackageReference Include="TromboneChamp.TrombLoader" Version="2.3.0" />
+		<PackageReference Include="TootTally.Core" Version="1.2.10" />
+		<PackageReference Include="TootTally.Accounts" Version="1.0.3" />
+		<PackageReference Include="TootTally.Settings" Version="1.1.4" />
 		<PackageReference Include="TwitchLib" Version="3.5.3" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
 		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="TootTallyCore">
-			<HintPath>$(TromboneTootDir)\BepInEx\plugins\TootTally-TootTallyCore\TootTallyCore.dll</HintPath>
-		</Reference>
-		<Reference Include="TootTallySettings">
-			<HintPath>$(TromboneTootDir)\BepInEx\plugins\TootTally-TootTallySettings\TootTallySettings.dll</HintPath>
-		</Reference>
-		<Reference Include="TootTallyAccounts">
-			<HintPath>$(TromboneTootDir)\BepInEx\plugins\TootTally-TootTallyAccounts\TootTallyAccounts.dll</HintPath>
-		</Reference>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
