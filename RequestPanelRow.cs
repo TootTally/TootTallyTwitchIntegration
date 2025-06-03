@@ -97,9 +97,19 @@ namespace TootTallyTwitchIntegration
                     TracksLoadedEvent.EVENT.Register(_reloadListener);
 
                     TootTallyNotifManager.DisplayNotif("Reloading Songs...");
-                    TootTallyCore.Plugin.Instance.Invoke("ReloadTracks", .5f);
-                    var play = GameObjectFactory.CreateCustomButton(_requestRowContainer.transform, Vector2.zero, new Vector2(68, 68), AssetManager.GetSprite("Check64.png"), "PlayButton", PlayChart);
-                    play.transform.SetSiblingIndex(5);
+                    TootTallyCore.Plugin.Instance.reloadManager?.ReloadAll(new ProgressCallbacks()
+                    {
+                        onComplete = () =>
+                        {
+                            TootTallyNotifManager.DisplayNotif("Reload complete!");
+                            var play = GameObjectFactory.CreateCustomButton(_requestRowContainer.transform, Vector2.zero, new Vector2(68, 68), AssetManager.GetSprite("Check64.png"), "PlayButton", PlayChart);
+                            play.transform.SetSiblingIndex(5);
+                        },
+                        onError = (err) =>
+                        {
+                            TootTallyNotifManager.DisplayNotif($"Reloading failed! {err.Message}");
+                        }
+                    });
                 }
                 else
                 {
