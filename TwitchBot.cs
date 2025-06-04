@@ -38,6 +38,7 @@ namespace TootTallyTwitchIntegration
             client.OnChatCommandReceived += Client_HandleChatCommand;
             client.OnIncorrectLogin += Client_OnIncorrectLogin;
             client.OnError += Client_OnError;
+            client.OnDisconnected += Client_OnDisconnected;
 
             MessageStack = new Stack<string>();
 
@@ -118,7 +119,7 @@ namespace TootTallyTwitchIntegration
                     break;
                 case "ttrhelp":
                     if (Plugin.Instance.EnableCurrentSongCommand.Value)
-                        client.SendMessage(CHANNEL, $"!Use !ttr to request a chart use its TootTally Song ID! To get a song ID, search for the song in https://toottally.com (Example: !ttr 3781)");
+                        client.SendMessage(CHANNEL, $"!Use !ttr to request a chart use its TootTally Song ID! To get a song ID, search for the song in https://toottally.com/search/ (Example: !ttr 3781)");
                     break;
                 case "queue":
                     if (Plugin.Instance.EnableCurrentSongCommand.Value)
@@ -155,7 +156,7 @@ namespace TootTallyTwitchIntegration
             CHANNEL = e.Channel;
         }
 
-        private void Client_OnDisconnected(object sender, OnDisconnectedArgs e)
+        private void Client_OnDisconnected(object sender, OnDisconnectedEventArgs e)
         {
             Plugin.LogInfo("TwitchBot successfully disconnected from Twitch!");
             TootTallyNotifManager.DisplayNotif("Twitch bot disconnected!");
