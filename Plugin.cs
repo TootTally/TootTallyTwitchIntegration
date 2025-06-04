@@ -90,6 +90,7 @@ namespace TootTallyTwitchIntegration
                 settingPage.AddToggle("Enable Requests Command", EnableRequestsCommand);
                 settingPage.AddToggle("Enable Current Songs Command", EnableCurrentSongCommand);
                 settingPage.AddToggle("Enable Profile Command", EnableProfileCommand);
+                settingPage.AddToggle("Subs Only Requests", SubOnlyMode);
                 settingPage.AddSlider("Max Request Count", 0, 200, MaxRequestCount, true);
                 settingPage.AddLabel("TwitchSpecificSettingsLabel", "Twitch Integration", 24); // 20 is the default size for text
                 settingPage.AddLabel("TwitchSpecificUsernameLabel", "Username", 16, TMPro.FontStyles.Normal, TMPro.TextAlignmentOptions.BottomLeft);
