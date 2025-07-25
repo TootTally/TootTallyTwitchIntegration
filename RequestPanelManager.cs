@@ -6,6 +6,7 @@ using static TootTallyTwitchIntegration.Plugin;
 using TootTallyCore.Graphics;
 using TootTallyCore.Graphics.Animations;
 using TootTallyCore.Utils.TootTallyNotifs;
+using UnityEngine.SceneManagement;
 
 namespace TootTallyTwitchIntegration
 {
@@ -111,6 +112,7 @@ namespace TootTallyTwitchIntegration
         
         public static void TogglePanel()
         {
+            if (songSelectInstance == null) return;
             _isPanelActive = !_isPanelActive;
             _scrollableHandler.enabled = _isPanelActive && _requestRowList.Count > 6;
             _isAnimating = true;
@@ -181,7 +183,6 @@ namespace TootTallyTwitchIntegration
 
         public static void SetRequestRowPrefab()
         {
-
             var tempRow = GameObjectFactory.CreateOverlayPanel(_overlayCanvas.transform, Vector2.zero, new Vector2(1340, 84), 5f, $"TwitchRequestRowTemp").transform.Find("FSLatencyPanel").gameObject;
             requestRowPrefab = GameObject.Instantiate(tempRow);
             GameObject.DestroyImmediate(tempRow.gameObject);
