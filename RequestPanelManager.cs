@@ -6,7 +6,6 @@ using static TootTallyTwitchIntegration.Plugin;
 using TootTallyCore.Graphics;
 using TootTallyCore.Graphics.Animations;
 using TootTallyCore.Utils.TootTallyNotifs;
-using UnityEngine.SceneManagement;
 
 namespace TootTallyTwitchIntegration
 {
