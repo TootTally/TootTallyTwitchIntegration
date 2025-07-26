@@ -1,35 +1,51 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net472</TargetFramework>
-		<AssemblyName>TootTallyTwitchIntegration</AssemblyName>
-		<Description>Twitch integration with song requests and more</Description>
-		<Version>1.0.4</Version>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<LangVersion>latest</LangVersion>
-		<TromboneChampDir>E:\SteamLibrary\steamapps\common\TromboneChamp</TromboneChampDir>
-		<TromboneTootDir>C:\Users\Sabz\AppData\Roaming\r2modmanPlus-local\TromboneChamp\profiles\Default</TromboneTootDir>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>TootTallyTwitchIntegration</AssemblyName>
+    <Description>Twitch integration with song requests and more</Description>
+    <Version>1.0.5</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <TromboneChampDir>E:\SteamLibrary\steamapps\common\TromboneChamp</TromboneChampDir>
+    <TromboneTootDir>C:\Users\Sabz\AppData\Roaming\r2modmanPlus-local\TromboneChamp\profiles\Default</TromboneTootDir>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-		<PackageReference Include="BepInEx.Core" Version="5.*" />
-		<PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
-		<PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile" />
-		<PackageReference Include="TromboneChamp.GameLibs" Version="1.25.0" />
-		<PackageReference Include="TromboneChamp.BaboonAPI" Version="2.9.0" />
-		<PackageReference Include="TromboneChamp.TrombLoader" Version="2.3.0" />
-		<PackageReference Include="TootTally.Core" Version="1.2.10" />
-		<PackageReference Include="TootTally.Accounts" Version="1.0.3" />
-		<PackageReference Include="TootTally.Settings" Version="1.1.4" />
-		<PackageReference Include="TwitchLib" Version="3.5.3" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
+    <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile" />
+    <PackageReference Include="TromboneChamp.GameLibs" Version="1.25.0" />
+    <PackageReference Include="TromboneChamp.BaboonAPI" Version="2.9.0" />
+    <PackageReference Include="TromboneChamp.TrombLoader" Version="2.3.0" />
+    <PackageReference Include="TootTally.Core" Version="1.2.10" />
+    <PackageReference Include="TootTally.Accounts" Version="1.0.3" />
+    <PackageReference Include="TootTally.Settings" Version="1.1.4" />
+    <PackageReference Include="TwitchLib" Version="3.5.3" />
+    <Assets Include="thunderstore\Assets\**" />
+    <TwitchLib Include="thunderstore\TwitchLib\**" />
+  </ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
-	</ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(TromboneTootDir)\BepInEx\plugins\TootTally-TootTallyTwitchIntegration" />
-	</Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(TromboneTootDir)\BepInEx\plugins\TootTally-TootTallyTwitchIntegration" />
+  </Target>
+
+  <Target Name="ThunderstoreZip" AfterTargets="Build">
+    <Delete Files="$(OutDir)thunderstore" />
+    <Delete Files="$(SolutionDir)$(ProjectName).zip" />
+    <Copy SourceFiles="thunderstore\icon.png" DestinationFolder="$(OutDir)thunderstore" />
+    <Copy SourceFiles="thunderstore\manifest.json" DestinationFolder="$(OutDir)thunderstore" />
+    <Copy SourceFiles="thunderstore\CHANGELOG.md" DestinationFolder="$(OutDir)thunderstore" />
+    <Copy SourceFiles="README.md" DestinationFolder="$(OutDir)thunderstore" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(OutDir)thunderstore/plugins" />
+    <Copy SourceFiles="@(Assets)" DestinationFolder="$(OutDir)thunderstore/plugins/Assets" />
+    <Copy SourceFiles="@(TwitchLib)" DestinationFolder="$(OutDir)thunderstore/plugins/TwitchLib" />
+    <MakeDir Directories="$(OutDir)thunderstore/plugins/Downloads" />
+    <ZipDirectory DestinationFile="$(SolutionDir)$(ProjectName).zip" SourceDirectory="$(OutDir)thunderstore" />
+  </Target>
 </Project>
