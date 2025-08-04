@@ -11,7 +11,6 @@ namespace TootTallyTwitchIntegration
 {
     public static class RequestPanelManager
     {
-        private const float MIN_POS_Y = -40;
         public static GameObject requestRowPrefab;
         public static LevelSelectController songSelectInstance;
         public static int songIndex;
@@ -111,7 +110,7 @@ namespace TootTallyTwitchIntegration
         
         public static void TogglePanel()
         {
-            _isPanelActive = !_isPanelActive;
+            _isPanelActive = songSelectInstance != null && !_isPanelActive;
             _scrollableHandler.enabled = _isPanelActive && _requestRowList.Count > 6;
             _isAnimating = true;
             if (_overlayPanel != null)
@@ -181,7 +180,6 @@ namespace TootTallyTwitchIntegration
 
         public static void SetRequestRowPrefab()
         {
-
             var tempRow = GameObjectFactory.CreateOverlayPanel(_overlayCanvas.transform, Vector2.zero, new Vector2(1340, 84), 5f, $"TwitchRequestRowTemp").transform.Find("FSLatencyPanel").gameObject;
             requestRowPrefab = GameObject.Instantiate(tempRow);
             GameObject.DestroyImmediate(tempRow.gameObject);

@@ -37,7 +37,7 @@ namespace TootTallyTwitchIntegration
             var charterText = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Charter", _chart.charter ?? "Unknown");
             var requesterText = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "RequestedByName", request.requester);
             var time = TimeSpan.FromSeconds(request.songData.song_length);
-            var stringTime = $"{(time.Hours != 0 ? (time.Hours + ":") : "")}{(time.Minutes != 0 ? time.Minutes : "0")}:{(time.Seconds != 0 ? time.Seconds : "00"):00}";
+            var stringTime = time.TotalHours >= 1 ? $"{(int)time.TotalHours}:{time:mm\\:ss}" : $"{time:m\\:ss}";
             var songLengthText = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "SongLength", stringTime);
             var requestTime = GameObjectFactory.CreateSingleText(_requestRowContainer.transform, "Time", request.date);
             //fuck that shit :skull:
