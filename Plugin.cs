@@ -96,8 +96,8 @@ namespace TootTallyTwitchIntegration
                 settingPage.AddLabel("TwitchSpecificUsernameLabel", "Username", 16, TMPro.FontStyles.Normal, TMPro.TextAlignmentOptions.BottomLeft);
                 settingPage.AddTextField("Twitch Username", new Vector2(350, 50), 20, TwitchUsername.Value, TwitchUsername.Description.Description, false, SetTwitchUsername);
                 settingPage.AddLabel("TwitchSpecificAccessTokenLabel", "AccessToken", 16, TMPro.FontStyles.Normal, TMPro.TextAlignmentOptions.BottomLeft);
-                settingPage.AddTextField("Twitch Access Token", new Vector2(350, 50), 20, TwitchAccessToken.Value, TwitchAccessToken.Description.Description, true, SetTwitchAccessToken);
                 settingPage.AddButton("AuthorizeTwitchButton", new Vector2(450, 50), "Authorize TootTally on Twitch", "Opens a page to get your auth token", delegate () { Application.OpenURL(toottallyTwitchLink); });
+                settingPage.AddTextField("Twitch Access Token", new Vector2(350, 50), 20, TwitchAccessToken.Value, TwitchAccessToken.Description.Description, true, SetTwitchAccessToken);
                 settingPage.AddLabel("TwitchBotButtons", "Twitch Bot Settings", 24);
                 settingPage.AddButton("ConnectDisconnectBot", new Vector2(350, 50), "Connect/Disconnect Bot", "Rarely useful if the bot fails to connect after setting the auth token", () =>
                 {
