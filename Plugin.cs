@@ -30,6 +30,7 @@ namespace TootTallyTwitchIntegration
         public static Plugin Instance;
 
         private const string CONFIG_NAME = "TwitchIntegration.cfg";
+        private const string PERSISTENT_TWITCH_CONFIG_NAME = "TootTallyTwitchIntegration.cfg";
         private const string CONFIG_FIELD = "Twitch";
         private Harmony _harmony;
         public ConfigEntry<bool> ModuleConfigEnabled { get; set; }
@@ -80,6 +81,9 @@ namespace TootTallyTwitchIntegration
             SubOnlyMode = config.Bind(CONFIG_FIELD, "Sub-only requests", false, "Only allow subscribers to send requests");
             TwitchUsername = config.Bind(CONFIG_FIELD, "Twitch channel to attach to", "", "Paste your twitch username here");
             TwitchAccessToken = config.Bind(CONFIG_FIELD, "Twitch Access Token", "", "Paste the access token from the website here");
+            if (TwitchAccessToken.Value != "")
+                MigrateAccessTokenToPersistentTootTallyFile();
+            PersistentTwitchAccessToken = FileHelper.LoadFromTootTallyAppData<string>(PERSISTENT_TWITCH_CONFIG_NAME);
             MaxRequestCount = config.Bind(CONFIG_FIELD, "Max Request Count", 50f, "Maximum request count allowed in queue");
 
             settingPage = TootTallySettingsManager.AddNewPage(CONFIG_FIELD, "Twitch Integration Settings", 40, new Color(.1f, .1f, .1f, .1f));
@@ -134,6 +138,14 @@ namespace TootTallyTwitchIntegration
             _harmony.UnpatchSelf();
             settingPage.Remove();
             LogInfo($"Module unloaded!");
+        }
+
+        public void MigrateAccessTokenToPersistentTootTallyFile()
+        {
+            PersistentTwitchAccessToken = TwitchAccessToken.Value;
+            FileHelper.SaveToTootTallyAppData(PERSISTENT_TWITCH_CONFIG_NAME, PersistentTwitchAccessToken);
+            TwitchAccessToken.Value = "";
+            Plugin.LogInfo("Migrated Access token to persistant toottally files.");
         }
 
         private void SetTwitchUsername(string text)
@@ -241,6 +253,7 @@ namespace TootTallyTwitchIntegration
         public ConfigEntry<bool> EnableCurrentSongCommand { get; set; }
         public ConfigEntry<bool> SubOnlyMode { get; set; }
         public ConfigEntry<string> TwitchUsername { get; set; }
+        public string PersistentTwitchAccessToken { get; set; }
         public ConfigEntry<string> TwitchAccessToken { get; set; }
         public ConfigEntry<float> MaxRequestCount { get; set; }
 
