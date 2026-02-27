@@ -53,32 +53,33 @@ namespace TootTallyTwitchIntegration
 
         public void RequestSong(int song_id, string requester, bool isSubscriber = false)
         {
-            
+
             if (!RequesterBlacklist.Contains(requester))
             {
                 if (RequestPanelManager.IsBlocked(song_id))
                 {
-                    Instance.Bot.client.SendMessage(Instance.Bot.CHANNEL, $"!Song #{song_id} is blocked.");
+                    Instance.Bot.client.SendMessage(Instance.Bot.CHANNEL, $"! Song #{song_id} is blocked.");
                     return;
                 }
                 else if (RequestPanelManager.IsDuplicate(song_id) && !RequestQueue.Any(x => x.song_id == song_id))
                 {
-                    Instance.Bot.client.SendMessage(Instance.Bot.CHANNEL, $"!Song #{song_id} already requested.");
+                    Instance.Bot.client.SendMessage(Instance.Bot.CHANNEL, $"! Song #{song_id} already requested.");
                     return;
                 }
                 else if (RequestPanelManager.RequestCount >= Instance.MaxRequestCount.Value)
                 {
-                    Instance.Bot.client.SendMessage(Instance.Bot.CHANNEL, $"!Request cap reached.");
+                    Instance.Bot.client.SendMessage(Instance.Bot.CHANNEL, $"! Request cap reached.");
                     return;
                 }
-                else if (Instance.SubOnlyMode.Value && !isSubscriber) {
+                else if (Instance.SubOnlyMode.Value && !isSubscriber)
+                {
                     return; // Silently ignore non-subscriber requests if in Sub Only mode
                 }
                 UnprocessedRequest request = new UnprocessedRequest();
                 request.song_id = song_id;
                 request.requester = requester;
                 LogInfo($"Accepted request {song_id} by {requester}.");
-                Instance.Bot.client.SendMessage(Instance.Bot.CHANNEL, $"!Song #{song_id} successfully requested.");
+                Instance.Bot.client.SendMessage(Instance.Bot.CHANNEL, $"! Song #{song_id} successfully requested.");
                 RequestQueue.Enqueue(request);
             }
         }

@@ -10,11 +10,11 @@ Press F8 to toggle the request panel in game.
 COMMAND LIST:
 - `!ttr [id]`: Request a song with an id
 - `!ttrhelp`: Display help message on how to request charts
-- `!profile`: Send a your TootTally profile link to the chat (if logged in)
-- `!song`: Sends what song you're currently playing
-- `!queue`: Sends a list of what songs are in your current queue
-- `!last`: Sends what your last played chart is
-- `!history`: Sends what charts you have played recently
+- `!ttrprofile`: Send a your TootTally profile link to the chat (if logged in)
+- `!ttrsong`: Sends what song you're currently playing
+- `!ttrqueue`: Sends a list of what songs are in your current queue
+- `!ttrlast`: Sends what your last played chart is
+- `!ttrhistory`: Sends what charts you have played recently
 
 INSTRUCTIONS:
 1. Instructions for first time usage/setup:

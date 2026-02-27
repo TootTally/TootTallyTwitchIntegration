@@ -1,4 +1,4 @@
-﻿using BaboonAPI.Hooks.Initializer;
+﻿﻿using BaboonAPI.Hooks.Initializer;
 using BaboonAPI.Hooks.Tracks;
 using BepInEx;
 using BepInEx.Configuration;
@@ -75,8 +75,8 @@ namespace TootTallyTwitchIntegration
             ConfigFile config = new ConfigFile(configPath + CONFIG_NAME, true) { SaveOnConfigSet = true };
             ToggleRequestPanel = config.Bind(CONFIG_FIELD, "TogglePanel", KeyCode.F8, "Key to toggle the twitch request panel.");
             EnableRequestsCommand = config.Bind(CONFIG_FIELD, "Enable requests command", true, "Allow people to requests songs using !ttr [songID]");
-            EnableCurrentSongCommand = config.Bind(CONFIG_FIELD, "Enable current song command", true, "!song command that sends a link to the current song into the chat");
-            EnableProfileCommand = config.Bind(CONFIG_FIELD, "Enable profile command", true, "!profile command that links your toottally profile into the chat");
+            EnableCurrentSongCommand = config.Bind(CONFIG_FIELD, "Enable current song command", true, "!ttrsong command that sends a link to the current song into the chat");
+            EnableProfileCommand = config.Bind(CONFIG_FIELD, "Enable profile command", true, "!ttrprofile command that links your toottally profile into the chat");
             SubOnlyMode = config.Bind(CONFIG_FIELD, "Sub-only requests", false, "Only allow subscribers to send requests");
             TwitchUsername = config.Bind(CONFIG_FIELD, "Twitch channel to attach to", "", "Paste your twitch username here");
             TwitchAccessToken = config.Bind(CONFIG_FIELD, "Twitch Access Token", "", "Paste the access token from the website here");

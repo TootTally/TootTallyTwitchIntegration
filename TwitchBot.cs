@@ -98,40 +98,40 @@ namespace TootTallyTwitchIntegration
                             else
                             {
                                 Plugin.LogInfo("Could not parse request input, ignoring.");
-                                client.SendMessage(CHANNEL, "!Invalid song ID. Please try again.");
+                                client.SendMessage(CHANNEL, "! Invalid song ID. Please try again.");
                             }
                         }
                         else
                         {
-                            client.SendMessage(CHANNEL, $"!Use !ttr to request a chart use its TootTally Song ID! To get a song ID, search for the song in https://toottally.com/search/ (Example: !ttr 3781)");
+                            client.SendMessage(CHANNEL, $"! Use !ttr to request a chart use its TootTally Song ID! To get a song ID, search for the song in https://toottally.com/search/ (Example: !ttr 3781)");
                         }
                     }
                     break;
-                case "profile": // Get profile
+                case "ttrprofile": // Get profile
                     if (Plugin.Instance.EnableProfileCommand.Value && TootTallyUser.userInfo.id > 0)
-                        client.SendMessage(CHANNEL, $"!TootTally Profile: https://toottally.com/profile/{TootTallyUser.userInfo.id}");
+                        client.SendMessage(CHANNEL, $"! TootTally Profile: https://toottally.com/profile/{TootTallyUser.userInfo.id}");
                     break;
-                case "song": // Get current song
+                case "ttrsong": // Get current song
                     if (Plugin.Instance.EnableCurrentSongCommand.Value && RequestPanelManager.currentSongID != 0)
                     {
-                        client.SendMessage(CHANNEL, $"!Current Song: https://toottally.com/song/{RequestPanelManager.currentSongID}");
+                        client.SendMessage(CHANNEL, $"! Current Song: https://toottally.com/song/{RequestPanelManager.currentSongID}");
                     }
                     break;
                 case "ttrhelp":
                     if (Plugin.Instance.EnableCurrentSongCommand.Value)
-                        client.SendMessage(CHANNEL, $"!Use !ttr to request a chart use its TootTally Song ID! To get a song ID, search for the song in https://toottally.com/search/ (Example: !ttr 3781)");
+                        client.SendMessage(CHANNEL, $"! Use !ttr to request a chart use its TootTally Song ID! To get a song ID, search for the song in https://toottally.com/search/ (Example: !ttr 3781)");
                     break;
-                case "queue":
+                case "ttrqueue":
                     if (Plugin.Instance.EnableCurrentSongCommand.Value)
-                        client.SendMessage(CHANNEL, $"!Song Queue: {RequestPanelManager.GetSongQueueIDString()}");
+                        client.SendMessage(CHANNEL, $"! Song Queue: {RequestPanelManager.GetSongQueueIDString()}");
                     break;
-                case "last":
+                case "ttrlast":
                     if (Plugin.Instance.EnableCurrentSongCommand.Value)
-                        client.SendMessage(CHANNEL, $"!Last song played: {RequestPanelManager.GetLastSongPlayed()}");
+                        client.SendMessage(CHANNEL, $"! Last song played: {RequestPanelManager.GetLastSongPlayed()}");
                     break;
-                case "history":
+                case "ttrhistory":
                     if (Plugin.Instance.EnableCurrentSongCommand.Value)
-                        client.SendMessage(CHANNEL, $"!Songs played: {RequestPanelManager.GetSongIDHistoryString()}");
+                        client.SendMessage(CHANNEL, $"! Songs played: {RequestPanelManager.GetSongIDHistoryString()}");
                     break;
                 default:
                     break;
